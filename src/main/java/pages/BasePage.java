@@ -39,7 +39,9 @@ public class BasePage {
         field.click();
         field.clear();
         field.sendKeys(value);
+        field.sendKeys(Keys.TAB);
         wait.until(valueChanged);
+
 
 
 

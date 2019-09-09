@@ -115,15 +115,15 @@ public class IpotekaPage extends BasePage {
 
     public void fillInitialFee(String initialFeeVal) {
 
-        do{
+    /*   do{
 
-            fillField(initialFee, initialFeeVal );
+            fillField(initialFee, initialFeeVal +"\n");
         }
-        while (!(driver.findElement(By.xpath("//input[@id='creditTerm']")).getText()).equals(initialFeeVal));
+        while (!(driver.findElement(By.xpath("//input[@id='creditTerm']")).getText()).equals(initialFeeVal));*/
 
 
 
-       /* fillField(initialFee, initialFeeVal + "\n");*/
+       fillField(initialFee, initialFeeVal+"\n");
     }
 
     public void fillCreditTerm(String creditTermVal) {
