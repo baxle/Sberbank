@@ -1,21 +1,24 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 import static steps.BaseSteps.driver;
 
 public class IpotekaPage extends BasePage {
+
+    private String oldValue;
+    private JavascriptExecutor jse = (JavascriptExecutor)driver;
+
     @FindBy(xpath = "//*[contains(@class,'dcCalc_textfield')][contains(@id, 'estateCost')]")
     WebElement propertyPrice;
     @FindBy(xpath = "//*[contains(@class,'dcCalc_textfield')][contains(@id, 'initialFee')]")
@@ -26,8 +29,13 @@ public class IpotekaPage extends BasePage {
     WebElement salaryCard;
     @FindBy(xpath = "//div[contains(text(), 'Есть возможность подтвердить доход справкой')]")
     WebElement reference;
+    @FindBy(xpath = "//div[@class='dcCalc_frame__discounts']/div[3]//span[@class='dcCalc_switch__control']")
+    WebElement referenceMenu;
     @FindBy(xpath = "//div[@class='dcCalc_frame__discounts']/div[5]//span[@class='dcCalc_switch__control']")
     WebElement youngFamily;
+
+
+
 
     @FindBy(xpath = "//*[contains(@data-test-id, 'amountOfCredit')]")
     static
@@ -41,30 +49,22 @@ public class IpotekaPage extends BasePage {
     WebElement interestRate;
 
 
-    private String oldValue;
-    WebDriverWait wait = new WebDriverWait(driver, 30);
 
-
-
-
-
-
+@Step("Заполнение всех полей в калькуляторе")
     public void fillAllFields(String propertyPriceVal, String initialFeeVal, String creditTermVal, boolean salaryCardVal, boolean youngFamilyVal) throws InterruptedException {
-       // Thread.sleep(2000);
+
         fillPropertyPrice(propertyPriceVal);
-       // Thread.sleep(2000);
+
         fillInitialFee(initialFeeVal);
-       // Thread.sleep(2000);
+
         fillCreditTerm(creditTermVal);
-       // Thread.sleep(2000);
+
 
         if(salaryCardVal==false){
             salaryCard.click();
         }
 
-      //  Thread.sleep(2000);
         waitForTextReference();
-     //   Thread.sleep(2000);
 
         if (youngFamilyVal==true){
             youngFamily.click();
@@ -74,6 +74,7 @@ public class IpotekaPage extends BasePage {
 
     }
 
+    @Step("заполнение стоимости недвижимости значением {propertyPriceVal}")
     public void fillPropertyPrice(String propertyPriceVal) {
 
        /* Actions builder = new Actions(driver);
@@ -112,10 +113,10 @@ public class IpotekaPage extends BasePage {
 
 
     }
-
+    @Step("заполнение первоначального взноса значением {initialFeeVal}")
     public void fillInitialFee(String initialFeeVal) {
 
-    /*   do{
+    /*  do{
 
             fillField(initialFee, initialFeeVal +"\n");
         }
@@ -123,17 +124,50 @@ public class IpotekaPage extends BasePage {
 
 
 
-       fillField(initialFee, initialFeeVal+"\n");
+      // fillField(initialFee, initialFeeVal+"\n");
+
+        if(!initialFeeVal.equals(initialFee.getText())){
+            fillField(initialFee, initialFeeVal+"\n");
+        }
+
+
+           /* if((expectedPrice.equals(actualPrice)!=true)){
+                initialFee.clear();
+                initialFee.sendKeys(str1);
+            }*/
+
     }
 
+    @Step("заполнение срока кредита значением {creditTermVal}")
     public void fillCreditTerm(String creditTermVal) {
-        fillField(creditTerm, creditTermVal + "\n");
+       /* fillField(creditTerm, creditTermVal + "\n");*/
+
+        if(!(creditTermVal.equals(creditTerm.getText()))){
+            fillField(creditTerm, creditTermVal+"\n");
+        }
+
     }
 
+    @Step("снимаем метку с наличия зарплатной карты сбербанка")
     public void offSalaryCard() {
+
+
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        oldValue = IpotekaPage.getRequiredIncome();
+
+        Function<? super WebDriver, Object> valueChanged = new ExpectedCondition<Object>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !(IpotekaPage.getRequiredIncome().equals(oldValue));
+            }
+        };
+
+
         salaryCard.click();
+        wait.until(valueChanged);
     }
 
+    @Step("ожидание появления \"есть возможность подтвердить доход справкой\"")
     public void waitForTextReference() {
 
         (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
@@ -143,10 +177,44 @@ public class IpotekaPage extends BasePage {
         });
     }
 
+    @Step("снимаем метку с наличия зарплатной карты сбербанка")
     public void onYoungFamily() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        oldValue = IpotekaPage.getRequiredIncome();
+
+        Function<? super WebDriver, Object> valueChanged = new ExpectedCondition<Object>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !(IpotekaPage.getRequiredIncome().equals(oldValue));
+            }
+        };
+
+
+
         youngFamily.click();
+        wait.until(valueChanged);
     }
 
+
+    @Step("снимаем метку с возможности подтвердить доход справкой")
+    public void offReference(){
+
+        jse.executeScript("window.scrollBy(0,150)");
+
+
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        oldValue = IpotekaPage.getRequiredIncome();
+
+        Function<? super WebDriver, Object> valueChanged = new ExpectedCondition<Object>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                return !(IpotekaPage.getRequiredIncome().equals(oldValue));
+            }
+        };
+
+    referenceMenu.click();
+        wait.until(valueChanged);
+    }
 /*Проверить значение полей
 Сумма кредита
 2 122 000 ₽
@@ -158,18 +226,25 @@ public class IpotekaPage extends BasePage {
 11% - тут ошибка (специально)
 */
 
+    @Step("сверка суммы кредита со значением {creditSumVal}")
     public void checkCreditSum(String creditSumVal){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+
         assertEquals("Сумма кредита не соотвествует ожидаемой сумме", creditSumVal, creditSum.getText());
     }
 
+    @Step("сверка ежемесячного платежа со значением {monthlyPaymentVal}")
     public void checkMonthlyPayment(String monthlyPaymentVal){
         assertEquals("Ежемесячный платеж не соотвествует ожидаемому платежу", monthlyPaymentVal, monthlyPayment.getText());
     }
 
+    @Step("сверка необходимого дохода со значением {requiredIncomeVal}")
     public void checkRequiredIncome(String requiredIncomeVal){
         assertEquals("Необходимый доход не соотвествует ожидаемому доходу", requiredIncomeVal, requiredIncome.getText());
     }
 
+    @Step("сверка процентной ставки со значением {interestRateVal}")
     public void checkInterestRate(String interestRateVal){
         assertEquals("Процентная ставка не соотвествует ожидаемой ставке", interestRateVal, interestRate.getText());
     }

@@ -44,6 +44,8 @@ public class MainPage extends BasePage {
         ipotekaButton.click();
 
 
+
+
     }
 
 

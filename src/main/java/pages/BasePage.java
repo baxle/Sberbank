@@ -5,19 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import steps.BaseSteps;
-
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import static steps.BaseSteps.driver;
 
 
 public class BasePage {
-    Wait wait;
     private String oldValue;
 
     public BasePage() {
@@ -39,18 +34,8 @@ public class BasePage {
         field.click();
         field.clear();
         field.sendKeys(value);
-        field.sendKeys(Keys.TAB);
+        /*field.sendKeys(Keys.TAB);*/
         wait.until(valueChanged);
-
-
-
-
-
-
-
-
-
-
 
 
       /* WebDriverWait wait = new WebDriverWait(driver, 30);

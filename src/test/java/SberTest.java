@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -27,24 +28,25 @@ public class SberTest {
 
 
     @Test
-    public void check() throws InterruptedException {
+    public void fill() throws InterruptedException {
         MainPage mainPage = new MainPage();
         mainPage.menu();
         mainPage.goToIpoteka();
 
         IpotekaPage ipotekaPage = new IpotekaPage();
 
-       /*
+
         ipotekaPage.fillPropertyPrice("5180000");
         ipotekaPage.fillInitialFee("3058000");
         ipotekaPage.fillCreditTerm("30");
         ipotekaPage.offSalaryCard();
         ipotekaPage.waitForTextReference();
-        ipotekaPage.onYoungFamily();*/
+        ipotekaPage.onYoungFamily();
+        ipotekaPage.offReference();
 
+       //ipotekaPage.fillAllFields("5180000", "3058000", "30", false, true );
 
-       ipotekaPage.fillAllFields("5180000", "3058000", "30", false, true );
-
+       // Thread.sleep(5000);
        ipotekaPage.checkCreditSum("2 122 000 ₽");
        ipotekaPage.checkMonthlyPayment("18 937 ₽");
        ipotekaPage.checkRequiredIncome("31 561 ₽");
@@ -52,6 +54,11 @@ public class SberTest {
 
 
     }
+
+    /* @After
+     public void tearDown() throws Exception {
+         driver.quit();
+     }*/
 
 
 }
