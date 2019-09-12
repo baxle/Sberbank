@@ -18,6 +18,8 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
+
+
     <build>
         <plugins>
             <plugin>
@@ -43,6 +45,9 @@
                             <value>io.qameta.allure.junit4.AllureJunit4</value>
                         </property>
                     </properties>
+                    <includes>
+                        <include>**/CucumberRunner.java</include>>
+                    </includes>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -76,6 +81,17 @@
             <artifactId>allure-junit4</artifactId>
             <version>${allure.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
