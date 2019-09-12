@@ -55,10 +55,10 @@ public class SberTest {
 
     }
 
-    /* @After
+     @After
      public void tearDown() throws Exception {
          driver.quit();
-     }*/
+     }
 
 
 }

@@ -1,10 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -127,7 +124,8 @@ public class IpotekaPage extends BasePage {
       // fillField(initialFee, initialFeeVal+"\n");
 
         if(!initialFeeVal.equals(initialFee.getText())){
-            fillField(initialFee, initialFeeVal+"\n");
+           /* fillField(initialFee, initialFeeVal+"\n");*/
+            fillField(initialFee, initialFeeVal);
         }
 
 
@@ -162,9 +160,10 @@ public class IpotekaPage extends BasePage {
             }
         };
 
-
-        salaryCard.click();
-        wait.until(valueChanged);
+        if(driver.findElement(By.xpath("//input[@data-test-id='paidToCard']")).isSelected()) {
+            salaryCard.click();
+            wait.until(valueChanged);
+        }
     }
 
     @Step("ожидание появления \"есть возможность подтвердить доход справкой\"")
@@ -177,7 +176,7 @@ public class IpotekaPage extends BasePage {
         });
     }
 
-    @Step("снимаем метку с наличия зарплатной карты сбербанка")
+    @Step("ставим метку \"Молодая семья\"")
     public void onYoungFamily() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         oldValue = IpotekaPage.getRequiredIncome();
@@ -190,9 +189,11 @@ public class IpotekaPage extends BasePage {
         };
 
 
+        if (!youngFamily.isSelected()) {
+            youngFamily.click();
+            wait.until(valueChanged);
+        }
 
-        youngFamily.click();
-        wait.until(valueChanged);
     }
 
 
@@ -212,8 +213,12 @@ public class IpotekaPage extends BasePage {
             }
         };
 
-    referenceMenu.click();
-        wait.until(valueChanged);
+
+        if(driver.findElement(By.xpath("//input[@data-test-id='canConfirmIncome']")).isSelected()){
+            referenceMenu.click();
+            wait.until(valueChanged);
+        }
+
     }
 /*Проверить значение полей
 Сумма кредита
