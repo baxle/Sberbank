@@ -1,5 +1,6 @@
 package steps;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
@@ -12,10 +13,11 @@ import util.TestProperties;
 
 import java.util.concurrent.TimeUnit;
 
-public class Steps {
+public class Steps extends BaseSteps {
     BasePage basePage = new BasePage();
     IpotekaPage ipotekaPage = new IpotekaPage();
     MainPage mainPage = new MainPage();
+    WebDriver driver;
 
 
     @Когда("на меню \"Ипотека\" наведен курсор")
@@ -73,7 +75,6 @@ public class Steps {
 
     @Before
     public void before() {
-        WebDriver driver;
         System.setProperty("webdriver.chrome.driver", TestProperties.getInstance().getProperty("path.chrome"));
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -81,5 +82,6 @@ public class Steps {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         BaseSteps.driver = driver;
     }
+
 
 }
