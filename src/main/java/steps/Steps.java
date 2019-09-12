@@ -6,6 +6,7 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
 import pages.BasePage;
 import pages.IpotekaPage;
 import pages.MainPage;
@@ -13,12 +14,22 @@ import util.TestProperties;
 
 import java.util.concurrent.TimeUnit;
 
-public class Steps extends BaseSteps {
-    BasePage basePage = new BasePage();
-    IpotekaPage ipotekaPage = new IpotekaPage();
-    MainPage mainPage = new MainPage();
-    WebDriver driver;
+public class Steps extends BaseSteps{
 
+    WebDriver driver;
+    MainPage mainPage;
+    IpotekaPage ipotekaPage;
+
+    @Before
+    public void before() {
+        System.setProperty("webdriver.chrome.driver", TestProperties.getInstance().getProperty("path.chrome"));
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get(TestProperties.getInstance().getProperty("url"));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        mainPage = PageFactory.initElements(driver, MainPage.class);
+        ipotekaPage = PageFactory.initElements(driver, IpotekaPage.class);
+    }
 
     @Когда("на меню \"Ипотека\" наведен курсор")
     public void openMain() {
@@ -73,15 +84,7 @@ public class Steps extends BaseSteps {
         ipotekaPage.checkInterestRate(interestRateVal);
     }
 
-    @Before
-    public void before() {
-        System.setProperty("webdriver.chrome.driver", TestProperties.getInstance().getProperty("path.chrome"));
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(TestProperties.getInstance().getProperty("url"));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        BaseSteps.driver = driver;
-    }
+
 
 
 }
