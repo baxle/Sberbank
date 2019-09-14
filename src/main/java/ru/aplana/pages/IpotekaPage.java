@@ -1,4 +1,4 @@
-package pages;
+package ru.aplana.pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
-import static steps.BaseSteps.driver;
+import static ru.aplana.steps.BaseSteps.driver;
 
 public class IpotekaPage extends BasePage {
 
@@ -17,33 +17,33 @@ public class IpotekaPage extends BasePage {
     private JavascriptExecutor jse = (JavascriptExecutor)driver;
 
     @FindBy(xpath = "//*[contains(@class,'dcCalc_textfield')][contains(@id, 'estateCost')]")
-    WebElement propertyPrice;
+    public WebElement propertyPrice;
     @FindBy(xpath = "//*[contains(@class,'dcCalc_textfield')][contains(@id, 'initialFee')]")
-    WebElement initialFee;
+    public WebElement initialFee;
     @FindBy(xpath = "//input[@id='creditTerm']")
-    WebElement creditTerm;
+    public WebElement creditTerm;
     @FindBy(xpath = "//div[contains(@class, 'discounts')]//label[contains(@class, 'switch_checked')]")
-    WebElement salaryCard;
+    public WebElement salaryCard;
     @FindBy(xpath = "//div[contains(text(), 'Есть возможность подтвердить доход справкой')]")
-    WebElement reference;
+    public  WebElement reference;
     @FindBy(xpath = "//div[@class='dcCalc_frame__discounts']/div[3]//span[@class='dcCalc_switch__control']")
-    WebElement referenceMenu;
+    public WebElement referenceMenu;
     @FindBy(xpath = "//div[@class='dcCalc_frame__discounts']/div[5]//span[@class='dcCalc_switch__control']")
-    WebElement youngFamily;
+    public WebElement youngFamily;
 
 
 
 
     @FindBy(xpath = "//*[contains(@data-test-id, 'amountOfCredit')]")
     static
-    WebElement creditSum;
+    public WebElement creditSum;
     @FindBy(xpath = "//*[contains(@data-test-id, 'monthlyPayment')]")
-    WebElement monthlyPayment;
+    public WebElement monthlyPayment;
     @FindBy(xpath = "//*[contains(@data-test-id, 'requiredIncome')]")
     static
-    WebElement requiredIncome;
+    public WebElement requiredIncome;
     @FindBy(xpath = "//*[contains(@data-test-id, 'rate')]")
-    WebElement interestRate;
+    public WebElement interestRate;
 
 
 

@@ -3,9 +3,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.IpotekaPage;
-import pages.MainPage;
-import steps.BaseSteps;
+
+import ru.aplana.pages.IpotekaPage;
+import ru.aplana.pages.MainPage;
+import ru.aplana.steps.BaseSteps;
 import util.TestProperties;
 
 import java.util.concurrent.TimeUnit;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class SberTest {
 
     WebDriver driver;
+    BaseSteps baseSteps = new BaseSteps();
 
 
     @Before
@@ -55,10 +57,10 @@ public class SberTest {
 
     }
 
-     @After
+ /*    @After
      public void tearDown() throws Exception {
          driver.quit();
-     }
+     }*/
 
 
 }

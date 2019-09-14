@@ -1,20 +1,20 @@
-package steps;
+package ru.aplana.steps;
 
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
-import pages.BasePage;
-import pages.IpotekaPage;
-import pages.MainPage;
+import ru.aplana.pages.BasePage;
+import ru.aplana.pages.IpotekaPage;
+import ru.aplana.pages.MainPage;
+import ru.aplana.steps.BaseSteps;
 import util.TestProperties;
 
 import java.util.concurrent.TimeUnit;
 
-public class Steps extends BaseSteps{
+public class Steps extends BaseSteps {
 
     WebDriver driver;
     MainPage mainPage;
@@ -37,7 +37,7 @@ public class Steps extends BaseSteps{
     }
 
     @Тогда("проверено, что открылось выпадающее меню")
-    public void checkmenu() {
+    public void checkmenu() throws InterruptedException {
         mainPage.goToIpoteka();
     }
 

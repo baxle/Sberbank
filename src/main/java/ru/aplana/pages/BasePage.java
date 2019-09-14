@@ -1,15 +1,14 @@
-package pages;
+package ru.aplana.pages;
 
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import steps.BaseSteps;
+import ru.aplana.steps.BaseSteps;
 import java.util.function.Function;
 
-import static steps.BaseSteps.driver;
+import static ru.aplana.steps.BaseSteps.driver;
 
 
 public class BasePage {
